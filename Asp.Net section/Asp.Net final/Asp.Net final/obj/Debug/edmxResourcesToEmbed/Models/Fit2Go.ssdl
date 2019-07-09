@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Fit2GoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ClubInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="text" Nullable="false" />
+    <Property Name="Image" Type="text" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Pincode" Type="int" Nullable="false" />
+    <Property Name="Fax" Type="int" Nullable="false" />
+    <Property Name="Website" Type="text" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Duration" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Image" Type="text" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Description" Type="text" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CourseSchedule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Day" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+    <Property Name="TrainerId" Type="int" Nullable="false" />
+    <Property Name="RoomId" Type="int" Nullable="false" />
+    <Property Name="From" Type="datetime" Nullable="false" />
+    <Property Name="To" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="text" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rooms">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Trainers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Gender" Type="bit" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="PinCode" Type="int" Nullable="false" />
+    <Property Name="StatusId" Type="int" Nullable="false" />
+    <Property Name="Image" Type="text" Nullable="false" />
+    <Property Name="Country" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="WeekDay">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__CourseSch__Cours__46E78A0C">
+    <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+    <End Role="CourseSchedule" Type="Self.CourseSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseSchedule">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CourseSch__RoomI__48CFD27E">
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+    <End Role="CourseSchedule" Type="Self.CourseSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rooms">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseSchedule">
+        <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CourseSch__Train__47DBAE45">
+    <End Role="Trainers" Type="Self.Trainers" Multiplicity="1" />
+    <End Role="CourseSchedule" Type="Self.CourseSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trainers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseSchedule">
+        <PropertyRef Name="TrainerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__StatusId__3C69FB99">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Fit2GoModelStoreContainer">
+    <EntitySet Name="ClubInfo" EntityType="Self.ClubInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CourseSchedule" EntityType="Self.CourseSchedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trainers" EntityType="Self.Trainers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WeekDay" EntityType="Self.WeekDay" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__CourseSch__Cours__46E78A0C" Association="Self.FK__CourseSch__Cours__46E78A0C">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="CourseSchedule" EntitySet="CourseSchedule" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CourseSch__RoomI__48CFD27E" Association="Self.FK__CourseSch__RoomI__48CFD27E">
+      <End Role="Rooms" EntitySet="Rooms" />
+      <End Role="CourseSchedule" EntitySet="CourseSchedule" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CourseSch__Train__47DBAE45" Association="Self.FK__CourseSch__Train__47DBAE45">
+      <End Role="Trainers" EntitySet="Trainers" />
+      <End Role="CourseSchedule" EntitySet="CourseSchedule" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__StatusId__3C69FB99" Association="Self.FK__Users__StatusId__3C69FB99">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

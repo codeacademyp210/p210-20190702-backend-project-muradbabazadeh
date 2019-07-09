@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Fit2GoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ClubInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Pincode" Type="Int32" Nullable="false" />
+    <Property Name="Fax" Type="Int32" Nullable="false" />
+    <Property Name="Website" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cours">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Duration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CourseSchedules" Relationship="Self.FK__CourseSch__Cours__46E78A0C" FromRole="Courses" ToRole="CourseSchedule" />
+  </EntityType>
+  <EntityType Name="CourseSchedule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Day" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CourseId" Type="Int32" Nullable="false" />
+    <Property Name="TrainerId" Type="Int32" Nullable="false" />
+    <Property Name="RoomId" Type="Int32" Nullable="false" />
+    <Property Name="From" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="To" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Cours" Relationship="Self.FK__CourseSch__Cours__46E78A0C" FromRole="CourseSchedule" ToRole="Courses" />
+    <NavigationProperty Name="Room" Relationship="Self.FK__CourseSch__RoomI__48CFD27E" FromRole="CourseSchedule" ToRole="Rooms" />
+    <NavigationProperty Name="Trainer" Relationship="Self.FK__CourseSch__Train__47DBAE45" FromRole="CourseSchedule" ToRole="Trainers" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="CourseSchedules" Relationship="Self.FK__CourseSch__RoomI__48CFD27E" FromRole="Rooms" ToRole="CourseSchedule" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Users__StatusId__3C69FB99" FromRole="Status" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Trainer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="CourseSchedules" Relationship="Self.FK__CourseSch__Train__47DBAE45" FromRole="Trainers" ToRole="CourseSchedule" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="Boolean" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PinCode" Type="Int32" Nullable="false" />
+    <Property Name="StatusId" Type="Int32" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Status" Relationship="Self.FK__Users__StatusId__3C69FB99" FromRole="Users" ToRole="Status" />
+  </EntityType>
+  <EntityType Name="WeekDay">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__CourseSch__Cours__46E78A0C">
+    <End Role="Courses" Type="Self.Cours" Multiplicity="1" />
+    <End Role="CourseSchedule" Type="Self.CourseSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseSchedule">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CourseSch__RoomI__48CFD27E">
+    <End Role="Rooms" Type="Self.Room" Multiplicity="1" />
+    <End Role="CourseSchedule" Type="Self.CourseSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rooms">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseSchedule">
+        <PropertyRef Name="RoomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CourseSch__Train__47DBAE45">
+    <End Role="Trainers" Type="Self.Trainer" Multiplicity="1" />
+    <End Role="CourseSchedule" Type="Self.CourseSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trainers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseSchedule">
+        <PropertyRef Name="TrainerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__StatusId__3C69FB99">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Fit2GoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ClubInfoes" EntityType="Self.ClubInfo" />
+    <EntitySet Name="Courses" EntityType="Self.Cours" />
+    <EntitySet Name="CourseSchedules" EntityType="Self.CourseSchedule" />
+    <EntitySet Name="Rooms" EntityType="Self.Room" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="Trainers" EntityType="Self.Trainer" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="WeekDays" EntityType="Self.WeekDay" />
+    <AssociationSet Name="FK__CourseSch__Cours__46E78A0C" Association="Self.FK__CourseSch__Cours__46E78A0C">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="CourseSchedule" EntitySet="CourseSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CourseSch__RoomI__48CFD27E" Association="Self.FK__CourseSch__RoomI__48CFD27E">
+      <End Role="Rooms" EntitySet="Rooms" />
+      <End Role="CourseSchedule" EntitySet="CourseSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CourseSch__Train__47DBAE45" Association="Self.FK__CourseSch__Train__47DBAE45">
+      <End Role="Trainers" EntitySet="Trainers" />
+      <End Role="CourseSchedule" EntitySet="CourseSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__StatusId__3C69FB99" Association="Self.FK__Users__StatusId__3C69FB99">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
